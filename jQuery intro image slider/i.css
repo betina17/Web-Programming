@@ -1,0 +1,48 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    display: flex;  /* Enables flexbox layout */
+    justify-content: center;  /* Centers content horizontally */
+    align-items: center;  /* Centers content vertically */
+}
+#slider-container {
+    position: relative; /*establishes that any absolutely positioned child elements will be positioned relative to this container. */
+    width: 100%;   /*takes the full width of the  parent, which is the body */
+}
+#slider {
+    position: relative; 
+    white-space: nowrap; /* makes sure all images are only displayed on a horizontal line, one next to the other */
+    width: 100%;  /* Ensures the slider takes full width of its container */
+}
+.image {
+    display: inline-block; /*inline-block elements do not break onto a new line. they stay in a horizontal row. without this, they are placed vertically*/
+    margin: 0 10px; /* Adds space between images */
+    cursor: pointer; /* Changes cursor to pointer on hover to indicate that the images are clickable*/
+    height: 200px;  /* Fixed height for all images in the container*/
+    width: 300px;  /* Fixed width */
+}
+.image img {
+    height: 100%;  /* Fills the height of its container */
+    width: 100%;  /* Fills the width of its container */
+    object-fit: cover;  /* Ensures images cover the div without distortion */
+}
+#lightbox {
+    display: none;  /* Hides the lightbox by default until the lightbox is activated through click*/
+    position: fixed; /*it will not move or scroll with the rest of the page*/
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;  /* Takes full height of the viewport-user's visible area */
+    background: rgba(0, 0, 0, 0.7);  /* Adds a semi-transparent black background */
+    display: flex;          /* Enables flexbox layout for the lightbox */
+    justify-content: center; /* Centers content horizontally for the image to be displayed in center*/
+    align-items: center;    /* Centers content vertically */
+   
+}
+#lightbox img {
+    max-width: 80%; /* Limits the width of the image to 80% of the lightbox */
+    max-height: 80%;
+    cursor: pointer;
+}

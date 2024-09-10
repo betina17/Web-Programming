@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drag and Drop Example</title>
+  <style>
+    #dragme {
+      position: absolute;
+      left: 0;
+      top: 0;
+      /* set these so Chrome doesn't return 'auto' from getComputedStyle */
+      width: 200px;
+      background: rgba(166, 41, 141, 0.66);
+      border: 2px solid rgba(0, 0, 0, 0.5);
+      border-radius: 4px;
+      padding: 8px;
+    }
+  </style>
+</head>
+
+<body style="min-width: 99vw; min-height: 99vh; margin: 0;">
+
+  <div draggable="true" id="dragme">Drag me</div>
+
+  <script>
+    var offsetX, offsetY; // Variables to store the offset
+
+    function drag_start(event) {
+      var style = window.getComputedStyle(event.target, null);
+      offsetX = parseInt(style.getPropertyValue("left"), 10) - event.clientX;
+      offsetY = parseInt(style.getPropertyValue("top"), 10) - event.clientY;
+    }
+    /* offsetX = parseInt(style.getPropertyValue("left"), 10) - event.clientX;-This line calculates the horizontal offset between the left edge of the target element and the position of the mouse pointer when the dragstart
+     event occurs. It subtracts the value obtained from event.clientX (the position of the mouse pointer) from the value obtained from 
+     style.getPropertyValue("left") (the position of the left edge of the element).
+    We need the drag_start function because we need to (it gets called when we start dragging the element):
+    Maintain the Offset: Throughout the drag operation, the position of the element needs to be adjusted based on the mouse movement. By storing 
+    the initial offset in variables (offsetX and offsetY), we can continuously update the element's position relative to the mouse pointer's movement.
+    Ensure Correct Dragging Behavior: Without calculating and storing the offset, the dragged element might jump to an unexpected position relative
+     to the mouse pointer. This behavior could confuse the user and make the drag operation unpredictable.
+    */
+
+    function drag_over(event) {
+      event.preventDefault();
+      return false;
+    }
+    /*The drag_over function is an event handler function that is called when a draggable element is being dragged over a potential drop target
+     during a drag and drop operation.
+     By default, most browsers do not allow dropping elements onto other elements, so calling event.preventDefault() prevents this default
+    behavior and allows the drop event to be handled manually.
+    In JavaScript event handling, returning false from an event handler function is commonly understood to indicate that the default action
+    associated with the event should be suppressed-but returning false has no more other effect than calling event.preventDefault();
+
+    */
+
+    function drop(event) {
+      var dm = document.getElementById('dragme');
+      dm.style.left = (event.clientX + offsetX) + 'px';
+      dm.style.top = (event.clientY + offsetY) + 'px';
+      event.preventDefault();
+      return false;
+    }
+    ///event.clientX-x coord of the mouse right now
+    ///offsetX-calculated above, distance between mouse and left top corner of the draggable element
+    /*
+    var dm = document.getElementById('dragme');: This line retrieves the draggable element (<div id="dragme">...</div>) by its ID 'dragme' from 
+    the document. It assigns the reference to this element to the variable dm, which will be used to update its position.
+    dm.style.left = (event.clientX + offsetX) + 'px';: This line updates the left CSS property of the draggable element (dm) based on the horizontal
+    position of the mouse pointer (event.clientX) relative to the viewport, adjusted by the offset (offsetX) calculated during the drag_start event.
+    The updated position is set in pixels by concatenating the result with 'px'.*/
+
+    var dm = document.getElementById('dragme');
+    dm.addEventListener('dragstart', drag_start, false);
+    document.body.addEventListener('dragover', drag_over, false);
+    document.body.addEventListener('drop', drop, false);
+    /*In order to make the elem droppable anywhere in the body, I added the drop event to the document.body, not to a specific other element
+    */
+    /*the false parameter in these event listener registrations ensures that the event listeners are registered during the bubbling phase rather
+     than the capture phase. This is a common practice for most event listeners, as it allows events to propagate from the target element to its
+      ancestors, providing greater flexibility and compatibility with other event handlers.
+    */
+
+  </script>
+
+</body>
+
+</html>

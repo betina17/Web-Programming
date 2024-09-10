@@ -1,0 +1,121 @@
+<!--Solve the following task using only the jQuery library (production version, jquery.min.js, or developement 
+    version, jquery.js); YOU ARE NOT ALLOWED TO USE ANY OTHER JS LIBRARY, PLUGIN OR EXTENSION BESIDES THE JQUERY
+     LIBRARY. Write a web page which displays in the middle of the browser window a horizontal slider containing 
+     a list of images. The slider should continuously slide from the left to the right side of the browser window. 
+     Each image that exits the browser window on the right side should enter the browser window on the left side.
+      The sliding should be animated. If the user clicks on an image, the sliding is paused and a larger version of 
+      that window pops in the center of the browser window (just like images appear in the Lightbox javascript 
+      library). If the user clicks anywhere on this large image, the image dissapears and the sliding of the 
+      horizontal image bar is resumed.-->
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Image Slider</title>
+        <link rel="stylesheet" href="i.css" />
+      </head>
+      <body>
+        <div id="slider-container">
+          <div id="slider">
+            <div class="image"><img src="1.jpg" alt="Image 1" /></div>
+            <div class="image"><img src="2.jpg" alt="Image 2" /></div>
+            <div class="image"><img src="3.jpg" alt="Image 3" /></div>
+            <div class="image"><img src="4.jpg" alt="Image 4" /></div>
+            <div class="image"><img src="5.jpg" alt="Image 5" /></div>
+          </div>
+        </div>
+    
+        <div id="lightbox"></div>
+    
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            //Ensures that the JavaScript runs only after the entire HTML document has been loaded.
+
+          $(document).ready(function () {
+            var slideSpeed = 50000; //ms
+            var slideTimeout;
+            var isPaused = false;
+    
+            // Set up slider
+            /*  var slider = $("#slider");initializes the variable slider and assigns it to the jQuery object that represents the element with the ID
+             of slider. This jQuery object allows you to call jQuery methods on this particular element. */
+             /*the images variable is assigned to the result of the slider. find(".image") function. This function searches for all 
+            descendants of the slider element that have the class image. It returns a jQuery object containing all these elements,
+             which are the individual containers for each image in your slider*/
+             /*imageWidth is set to the outer width of the first element in the images jQuery object, including padding and margin. 
+             The outerWidth(true) method gets the outer width of the first element managed by the jQuery object. Including true as an argument 
+             tells jQuery to include the margins in the calculation as well. This is important for layout calculations if your images have margins,
+              as it affects the total width needed for the slider.*/
+           
+            var slider = $("#slider");
+            var images = slider.find(".image");
+            var totalImages = images.length;
+            var imageWidth = images.outerWidth(true);
+            var sliderWidth = totalImages * imageWidth; 
+            slider.width(sliderWidth); //The .width() method sets the CSS width property of the slider.
+            // Slide function
+            /*slider.animate(): This method is used to perform a custom animation on the left CSS property of the slider element.
+            { left: "+=" + imageWidth }: This object defines the animation effect. It tells jQuery to increment the left property by imageWidth,
+             effectively moving the slider to the right by the width of one image.
+            1000: This is the duration of the animation in milliseconds (1 second), meaning the slider will take 1 second to move imageWidth pixels
+             to the right.
+            "linear": Specifies the speed of the animation to be constant from start to finish.
+
+            The function provided as the last argument is a callback that executes once the animation completes.
+            var lastImage = slider.find(".image:last");: This selects the last image in the slider. .image:last is a selector that finds the
+             element with the class image that is the last child in its parent container (slider).
+            lastImage.prependTo(slider);: Moves the lastImage to the beginning of the slider. This is crucial for creating the illusion of an 
+            endless loop. By taking the last image and moving it to the front, it ensures that the slider never runs out of images as it moves.
+            slider.css("left", "0");: Resets the left property of the slider to 0. This adjustment is necessary because moving the last image to
+             the front changes the layout, and the slider needs to be repositioned to show the new first image correctly.
+            slide();: Calls the slide() function again, restarting the animation process. This recursive call is what makes the animation continue 
+            indefinitely (or until isPaused becomes true).
+                        */
+            function slide() {
+              if (!isPaused) {
+                slider.animate(
+                  { left: "+=" + imageWidth },
+                  1000,
+                  "linear",
+                  function () {
+                    var lastImage = slider.find(".image:last");
+                    lastImage.prependTo(slider);
+                    slider.css("left", "0");
+                    slide();
+                  }
+                );
+              } else {
+                // The setTimeout() function here schedules the slide() function to run again after slideSpeed milliseconds, after it has been paused.
+                // This is what resumes the sliding after the lightbox is closed.
+                slideTimeout = setTimeout(slide, slideSpeed);
+              }
+            }
+    
+            // Start sliding
+            slide();
+    
+            // Pause sliding on image click and show lightbox
+            /*This attaches a click event listener to each element within the images jQuery object.*/
+            images.click(function () {
+              clearTimeout(slideTimeout);
+              isPaused = true;
+              var imageSrc = $(this).find("img").attr("src");
+              $("#lightbox")
+                .html('<img src="' + imageSrc + '">')
+                .fadeIn();
+            });
+            // the clicked image is displayed in a full-sized lightbox with a fade-in effect.
+    
+            // Resume sliding on lightbox click
+            $("#lightbox").click(function () {
+              isPaused = false;
+              $(this).fadeOut();
+              slide();
+            });
+          });
+        </script>
+      </body>
+    </html>
