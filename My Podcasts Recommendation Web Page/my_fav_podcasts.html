@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+        img {
+            background-color: green;
+            opacity: 0.4;
+            background-repeat: repeat-x;
+            height: 300px;
+            width: 22%;
+
+        }
+
+        table {
+            border-style: solid;
+            border-color: black;
+        }
+
+        #glow {
+            border-style: solid;
+            border-color: black;
+            animation: glow 1s ease-in-out infinite alternate;
+            background-color: black;
+            color: white;
+
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+            }
+
+            to {
+                text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+            }
+        }
+
+        #burn {
+            animation: burn 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes burn {
+            from {
+                text-shadow: 0 0 5px #FF5722, 0 0 10px #FF5722, 0 0 20px #FF5722, 0 0 40px #FF5722, 0 0 80px #FF5722, 0 0 90px #FF5722, 0 0 100px #FF5722;
+            }
+
+            to {
+                text-shadow: 0 0 5px #FF5722, 0 0 10px #FF5722, 0 0 20px #FF5722, 0 0 40px #FF5722, 0 0 80px #FF5722, 0 0 90px #FF5722, 0 0 150px #FF5722;
+            }
+        }
+
+        p1,p2 {
+            background-color: purple;
+            color: white;
+            font-family: papyrus;
+        }
+
+        /* unvisited link */
+        a:link {
+            color: purple;
+        }
+
+        /* visited link */
+        a:visited {
+            color: black;
+        }
+
+        #textShadow {
+            text-shadow: 2px 2px 5px purple;
+        }
+        /* 2px pe axa X (la dreapta) fata de text, 2px pe axa Y (sub) text, 5px blur*/
+
+        #underline {
+            text-decoration: underline;
+        }
+
+
+        .navigation {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            width: 200px;
+            background-color: #f1f1f1;
+        }
+
+        .navigation li a {
+            display: block;
+            color: #000;
+            padding: 8px 16px;
+            text-decoration: none;
+        }
+
+        /* Change the link color on hover */
+        li a:hover  {
+            background-color: #555;
+            color: white;
+        }
+
+        /* Additional navigation bar style */
+        .additional-nav {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 200px;
+            width: 200px;
+            background-color: #f1f1f1;
+        }
+        /*the position is absolute with reference to the parent of the element additional-nav*/
+
+        .additional-nav li a {
+            display: block;
+            color: #000;
+            padding: 8px 16px;
+            text-decoration: none;
+        }
+
+        /* Show additional navigation bar on hover */
+        li:hover .additional-nav {
+            display: block;
+        }
+    </style>
+    <script src="https://kit.fontawesome.com/9521b0dd7e.js" crossorigin="anonymous"></script>
+    <title>Podcasts Recommendation</title>
+</head>
+
+<body style="background-color:powderblue;">
+    <main>
+        <header>
+            <h1 id="glow">My Favorite Podcaster in the world</h1>
+            <p1>Here is a brief presentation of my current favorite podcast, that I
+                listen to weekly while doing house chores, walking, driving, cooking, trying to fall asleep or
+                simply when relaxing. I invite you to try at least an episode that I recommend from this wonderful
+                podcast,
+                since I believe it will add a lot of value to your life. Enjoy!</p1>
+        </header>
+        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="yellow">
+            <path
+                d="M12 2l3.09 6.31 6.91.99-5 4.86 1.18 6.88L12 17.25l-6.18 3.79 1.18-6.88-5-4.86 6.91-.99L12 2zm0 2.27l-2.69 5.48-5.98.86 4.32 4.21-1.02 5.92L12 18.01l5.37 2.73-1.02-5.92 4.32-4.21-5.98-.86L12 4.27z" />
+        </svg>
+        <div>
+            <h2 id="textShadow">The Lex Fridman Podcast</h2>
+            <img src="lexfridman.png" width="300" height="300">
+            <table>
+                <tr>
+                    <th>Guest</th>
+                    <th>Title</th>
+                    <th>Link</th>
+                </tr>
+                <tr>
+                    <td>Neri Oxman:</td>
+                    <td>Biology, Art, and Science of Design & Engineering with Nature </td>
+                    <td><a href="https://youtu.be/XbPHojL_61U?si=3fkk03xmw4BxhPHJ">Link</a></td>
+                <tr>
+                <tr>
+                    <td>George Hotz:</td>
+                    <td>Tiny Corp, Twitter, AI Safety, Self-Driving, GPT, AGI & God</td>
+                    <td><a href="https://youtu.be/dNrTrx42DGQ?si=zhHHV4qecoGgQuUd">Link</a></td>
+                <tr>
+                <tr>
+                    <td>Max Tegmark: </td>
+                    <td>The Case for Halting AI Development</td>
+                    <td><a href="https://youtu.be/VcVfceTsD0A?si=6epMJd2iU7s99cfV">Link</a></td>
+                <tr>
+                <tr>
+                    <td>Joscha Bach:</td>
+                    <td>Life, Intelligence, Consciousness, AI & the Future of Humans </td>
+                    <td><a href="https://youtu.be/e8qJsk1j2zE?si=L4-AyBLe8HslD5Gh">Link</a></td>
+                <tr>
+                <tr>
+                    <td>Guillaume Verdon:</td>
+                    <td>Beff Jezos, E/acc Movement, Physics, Computation & AGI</td>
+                    <td><a href="https://youtu.be/8fEEbKJoNbU?si=JRDuwi8hTBoIGBno">Link</a></td>
+                <tr>
+
+            </table>
+            <section>
+                <h3 id="burn">Why I Love Lex Fridman</h3>
+                <p2>He is one of the deepest people that you will find on the internet. His soul is enormous, and
+                    his wisdom even more so. He feels everything, and mostly the love for every single thing in this
+                    world, up to a level that not many of us ever exeperience, and he also does not forget to share
+                    his appreciation to the people around him and to be grateful to the universe for the beauty that
+                    he witnesses everyday,and that he observes in everything.</li>
+                    Besides this, he is extremly:
+                </p2>
+
+                <ul>
+                    <li>intelligent</li>
+                    <li>curious</li>
+                    <li>open-minded</li>
+                    <li>humble</li>
+                    <li>kind</li>
+                    <li>funny</li>
+                    <li>and a great listener</li>
+                </ul>
+            </section>
+            <figure>
+                <figcaption>They say that we are what we do, so to get know Lex the person, not the interviewer,
+                    better, I put below a video that he uploaded portraying a typical day in his life</figcaption>
+                <video controls width="400" height="400">
+                    <source src="yt5s.io-A day in my life _ Lex Fridman.mp4" type="video/mp4">
+                </video>
+            </figure>
+            <figure>
+                <figcaption>Now a little gift for your ears: Lex playing Comfortably Numb Solo by Pink Floyd on his
+                    guitar</figcaption>
+                <i class="fas fa-guitar" style="font-size:48px;color:purple;"></i>
+                <audio controls preload="auto">
+                    <source src="videoplayback.m4a" type="video/m4a">
+                </audio>
+            </figure>
+            <!-- The audio is not playing -->
+            <footer>
+                <article>
+                    <aside>
+                        <nav>
+                            <h4 id="underline">For even more information about him and his career, you can visit his
+                                website:</h4>
+                    </aside>
+                    <a href="https://lexfridman.com/">Lex Fridman's Website</a>
+                    </nav>
+                </article>
+            </footer>
+        </div>
+
+        <br>
+       
+
+
+        <h3>Other podcasts that I enjoy:</h3>
+
+        <ul class = "navigation">
+            <li><a href="https://www.youtube.com/@hubermanlab">Huberman Lab</a></li>
+            <li>
+                <a href="#George Buhnici's Podcasts">George Buhnici's Podcasts</a>
+                <ul class="additional-nav">
+                    <li><a href="https://www.youtube.com/playlist?list=PL5eGc7CrOWSFaMX30DxicRNE_ZVrSIRW8">IGDLCC</a>
+                    </li>
+                    <li><a href="https://www.youtube.com/playlist?list=PL5eGc7CrOWSFTD-l_JZej45s_054Hj-BV">Curiosity</a>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="https://www.youtube.com/@fainsisimplu">Fain si Simplu</a></li>
+
+        </ul>
+    </main>
+</body>
+
+</html>

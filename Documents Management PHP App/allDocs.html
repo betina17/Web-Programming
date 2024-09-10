@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Documents</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            console.log("Document is ready"); // Ensures the code runs only after the DOM is fully loaded.
+
+
+            /* equivalent ajax code behind, to understand how $.getJASN works 
+            $.ajax({
+            url: "php/getAll.php", // The URL to send the request to
+            method: "GET",         // The HTTP method to use
+            dataType: "json",      // The type of data expected from the server
+            success: function(data) {
+                console.log("Data received:", data); // Success callback
+            }
+        });
+
+            */
+           /* jQuery sends an HTTP GET request to the URL "php/getAll.php".
+            This request is made asynchronously, meaning it does not block the execution of the rest of the code,
+            through the help of ajax.*/
+
+
+            //the server sends back a json array of document objects
+            //The parsed array is passed to the callback function as the data parameter.
+            /*jQuery automatically parses the JSON response into a JavaScript array of objects.
+            jQuery then calls the provided callback function, passing the parsed data as the data parameter.
+            This allows you to work with the array of objects directly within the callback function.
+             //jQuery automatically handles the response and parses the JSON data.
+            //then executes the function passed as the second argument to $.getJSON
+            //this internally uses ajax
+            */
+
+            $.getJSON("php/getAll.php", function(data) { 
+                console.log("Data received:", data); 
+                var table = $('<table>');
+                var headerRow = $('<tr>');
+                headerRow.append($('<th>').text('#'));
+                headerRow.append($('<th>').text('Title'));
+                headerRow.append($('<th>').text('Author'));
+                headerRow.append($('<th>').text('Number of Pages'));
+                headerRow.append($('<th>').text('Type'));
+                headerRow.append($('<th>').text('Format'));
+                headerRow.append($('<th>').text('Actions'));
+                table.append(headerRow);
+
+                /*data will look something like this:
+                [
+    { "title": "Document 1", "author": "Author 1", "numberOfPages": 10, "type": "PDF", "format": "Digital" },
+    { "title": "Document 2", "author": "Author 2", "numberOfPages": 20, "type": "Word", "format": "Physical" }
+]
+                */
+
+                $.each(data, function(index, document) {  //index is the index of the current element in the array
+                    var row = $('<tr>');                 //document is the current element in the array
+                                                        //they are part of the each functionality inJQuery
+                    row.append($('<td>').text(index + 1));  //append cells
+                    row.append($('<td>').text(document.title));
+                    row.append($('<td>').text(document.author));
+                    row.append($('<td>').text(document.numberOfPages));
+                    row.append($('<td>').text(document.type));
+                    row.append($('<td>').text(document.format));
+
+                    var editButton = $('<button>').text('Edit');
+                    editButton.click(function(){
+                        window.location.href = "edit.html?id=" + document.id;
+                    });
+
+                    var deleteButton = $("<button>").text("Delete");
+                    deleteButton.click(function (){
+                        window.location.href = "delete.html?id=" + document.id;
+                    });
+
+                    row.append($('<td>').append(editButton).append(deleteButton));
+
+                    table.append(row);
+                });
+
+                $('#documentTable').append(table);  //we do this so that the table is real-time updated using jQuery
+                                                    //not just a static html table 
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                console.error("Error fetching data: ", textStatus, errorThrown);
+            });
+        });
+        /*
+        jqXHR: The jqXHR object, which is the jQuery wrapper around the native XMLHttpRequest object.
+        textStatus: A string describing the type of error that occurred. Common values include "timeout", "error", "abort", and "parsererror".
+        errorThrown: An optional exception object, if one occurred. It may provide additional details about the error.
+        */
+    </script>
+</head>
+
+<body class="index">
+    <h1>Documents</h1>
+    <button onclick="window.location.href = 'add.html'">Add </button>
+    <button onclick="window.location.href = 'browse.html'">Browse</button>
+    <div id="documentTable"></div>
+</body>
+
+</html>
